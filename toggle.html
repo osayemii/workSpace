@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle</title>
+    <style>
+        .active{
+            background: coral;
+            color: #fff;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="toggle()">Toggle</button>
+    <div id="box" style="display: none;">Hello World</div>
+
+    <script>
+        function toggle() {
+            let box = document.getElementById('box');
+            box.style.display = box.style.display === 'none' ? "block" : 'none';
+        }
+    </script>
+</body>
+</html>

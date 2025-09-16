@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Timer</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .big {
+            font-size: 35px;
+        }
+
+        #div {
+            width: 100px;
+            height: 100px;
+            border: none;
+            background: aqua;
+            margin: 0 auto;
+            transition: background 1s ease-in-out;
+        }
+
+        .anim {
+            width: 300px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        input {
+            width: 280px;
+            padding: 10px 0;
+        }
+
+        #small {
+            width: 20px;
+            height: 20px;
+            background: rgb(124, 124, 255);
+            margin-top: 10px;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1 class="big">setInterval And clearInterval</h1>
+        <h1 id="counter">0</h1>
+        <button onclick="setInt()">Start</button>
+        <button onclick="clearInt()">Stop</button>
+    </div>
+    <hr>
+    <div>
+        <h1 class="big">setTimeout And clearTimeout</h1>
+        <div id="div"></div>
+    </div>
+    <hr>
+    <div class="anim">
+        <h1 class="big">Request Animation Frame</h1>
+        <input type="text" disabled>
+        <div id="small"></div>
+    </div>
+
+    <script>
+        // setinterval & clearinterval
+        const counter = document.getElementById('counter');
+        let increase = 0;
+        let intervalId = null;
+        function setInt() {
+            if (intervalId) return;
+            intervalId = setInterval(() => {
+                counter.innerText = increase;
+                increase++
+            }, 200);
+        }
+        function clearInt() {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+
+        //
+
+        //settimeout and cleartimeout
+        let div = document.getElementById('div')
+        let arrCol = ["red", "green", "blue", "pink", "black"];
+        let arrColLength = 0;
+        function setTime() {
+            if (arrColLength < arrCol.length) {
+                cler = setTimeout(() => {
+                    div.style.backgroundColor = arrCol[arrColLength];
+                    arrColLength++;
+                    setTime();
+                }, 2000)
+            } else {
+                arrColLength = 0;
+                setTime();
+            }
+        }
+        setTime();
+        div.addEventListener('click', () => {
+            clearTimeout(cler)
+            div.innerText = "Timer Stoped";
+        })
+
+        //
+        //request animation frame
+        // let position = 0;
+        // let box = document.getElementById('small');
+        // function animate() {
+        //     if (position < 300) {
+        //         box.style.left = position + 'px'
+        //         position++;
+        //     }
+
+        //     requestAnimationFrame(animate);
+        // }
+        // requestAnimationFrame(animate);
+        //OR
+        let box = document.getElementById('small');
+        let startTime = null;
+        const distance = 300;
+        const duration = 2000;
+
+        function animate(timeStamp) {
+            if(!startTime) startTime = timeStamp;
+            let elapse = timeStamp - startTime;
+
+            progress = Math.min((elapse / duration), 1);
+
+            box.style.left = (progress*distance)+'px';
+
+            if (progress < 1) {
+                requestAnimationFrame(animate)
+            }
+        }
+        requestAnimationFrame(animate)
+
+    </script>
+</body>
+
+</html>

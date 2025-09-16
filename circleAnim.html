@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .mainContainer {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .circles {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .circle1 {
+            border: 3px solid red;
+            animation: cir1 6s ease-in infinite;
+        }
+
+        .circle2 {
+            border: 3px solid yellow;
+            animation: cir2 6s ease-out infinite;
+            /* animation-delay: .5s; */
+        }
+
+        .circle3 {
+            border: 3px solid blue;
+            animation: cir3 6s ease-in infinite;
+            animation-delay: 1s;
+        }
+
+        .circle4 {
+            border: 3px solid black;
+            animation: cir4 6s ease-out infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes cir1 {
+            0% {
+                rotate: 0deg;
+                width: 100px;
+            }
+            50%{
+                width: 40px;
+            }
+            100% {
+                rotate: 360deg;
+                width: 100px;
+            }
+        }
+        @keyframes cir2 {
+            0% {
+                rotate: 0deg;
+                width: 100px;
+            }
+            50%{
+                width: 40px;
+            }
+            100% {
+                rotate: 360deg;
+                width: 100px;
+            }
+        }
+        @keyframes cir3 {
+            0% {
+                rotate: 0deg;
+                width: 100px;
+            }
+            50%{
+                width: 40px;
+            }
+            100% {
+                rotate: 360deg;
+                width: 100px;
+            }
+        }
+        @keyframes cir4 {
+            0% {
+                rotate: 0deg;
+                width: 100px;
+            }
+            50%{
+                width: 40px;
+            }
+            100% {
+                rotate: 360deg;
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mainContainer">
+        <div class="circle1 circles"></div>
+        <div class="circle2 circles"></div>
+        <div class="circle3 circles"></div>
+        <div class="circle4 circles"></div>
+    </div>
+</body>
+
+</html>

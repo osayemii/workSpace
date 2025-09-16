@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Functionality Test Page</title>
+  <script src="jQueryLink.js"></script>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .dark-theme {
+      background-color: #000;
+      color: #fff;
+    }
+
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #ccc;
+    }
+
+    #menu.show {
+      display: block;
+    }
+
+    #menu {
+      display: none;
+    }
+
+    #drop-area {
+      border: 2px dashed #999;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .item {
+      padding: 5px;
+      border-bottom: 1px solid #eee;
+    }
+
+    #myModal {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 30%;
+      background: white;
+      padding: 20px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div class="container"></div> -->
+  <div class="section" id="header">
+    <h2>1. Sticky Header</h2>
+    <p>This header becomes sticky when you scroll.</p>
+  </div>
+  
+  <div>
+    <h2 id="timeZone"></h2>
+  </div>
+
+  <div class="section">
+    <h2>2. Toggle Menu</h2>
+    <button onclick="toggleMenu()">Toggle Menu</button>
+    <div id="menu">
+      <p>Menu Item 1</p>
+      <p>Menu Item 2</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>3. Typewriter Effect</h2>
+    <h3 id="heading"></h3>
+  </div>
+
+  <div class="section">
+    <h2>4. Show/Hide Content</h2>
+    <button onclick="toggleContent()">Toggle Details</button>
+    <p id="details" style="display:none;">Here are some extra details...</p>
+  </div>
+
+  <div class="section">
+    <h2>5. Real-Time Clock</h2>
+    <p id="clock"></p>
+  </div>
+
+  <div class="section">
+    <h2>6. Theme Switcher</h2>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+
+  <div class="section">
+    <h2>7. Slideshow</h2>
+    <img id="slider" src="casbl1.jpeg" width="300">
+  </div>
+
+  <div class="section">
+    <h2>8. Countdown Timer</h2>
+    <button onclick="startCountdown(100)">Start 10s Countdown</button>
+    <p id="countdown"></p>
+  </div>
+
+  <div class="section">
+    <h2>9. Modal Popup</h2>
+    <button onclick="openModal()">Open Modal</button>
+    <div id="myModal">
+      <p>This is a modal popup!</p>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>10. Smooth Scroll</h2>
+    <button onclick="scrollToSection('footer')">Scroll to Footer</button>
+  </div>
+
+  <div class="section">
+    <h2>11. Dynamic Post Display</h2>
+    <div id="posts"></div>
+  </div>
+
+  <div class="section">
+    <h2>12. Contact Form Validation</h2>
+    <form onsubmit="return validateContact()">
+      <input type="email" id="email" placeholder="Enter Email">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h2>13. Live Search</h2>
+    <input type="text" onkeyup="liveSearch()" id="search" placeholder="Search...">
+    <div class="item">Apple</div>
+    <div class="item">Orange</div>
+    <div class="item">Banana</div>
+    <div class="item">Mango</div>
+  </div>
+
+  <div class="section">
+    <h2>14. Drag and Drop Upload</h2>
+    <div id="drop-area">Drop files here</div>
+  </div>
+
+  <div class="section" id="footer">
+    <h2>15. Fetch API (Check Console)</h2>
+    <button onclick="fetchData()">Fetch Data</button>
+  </div>
+
+
+  <script>
+    window.onscroll = function () {
+      document.getElementById("header").classList.toggle("sticky", window.scrollY > 0);
+    };
+
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("show");
+    }
+
+    let i = 0, text = "Welcome to Our Website!";
+    function typeEffect() {
+      if (i < text.length) {
+        document.getElementById("heading").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, 100);
+      }
+    }
+    window.onload = typeEffect;
+
+    function toggleContent() {
+      const el = document.getElementById("details");
+      el.style.display = el.style.display === "none" ? "block" : "none";
+    }
+
+    function showClock() {
+      document.getElementById("clock").innerText = new Date().toLocaleTimeString();
+    }
+    setInterval(showClock, 1000);
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-theme");
+    }
+
+    let index = 0;
+    const images = [
+      "casbl2.jpeg",
+      "casbl1.jpeg",
+      "casbl2.jpeg"
+    ];
+    function showSlide() {
+      document.getElementById("slider").src = images[index];
+      index = (index + 1) % images.length;
+    }
+    setInterval(showSlide, 3000);
+
+    function startCountdown(seconds) {
+      const display = document.getElementById("countdown");
+      const interval = setInterval(() => {
+        display.innerText = `${seconds} seconds remaining`;
+        if (seconds <= 0) clearInterval(interval);
+        seconds--;
+      }, 1000);
+    }
+
+    function openModal() {
+      document.getElementById("myModal").style.display = "block";
+    }
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    }
+
+    const posts = ["Learn JavaScript", "Build a Website", "Become a Developer"];
+    const container = document.getElementById("posts");
+    posts.forEach(post => container.innerHTML += `<p>${post}</p>`);
+
+    function validateContact() {
+      const email = document.getElementById("email").value;
+      if (!email.includes("@gmail.com")) {
+        alert("Invalid email");
+        return false;
+      }
+      alert("Submitted!");
+      return true;
+    }
+
+    function liveSearch() {
+      const keyword = document.getElementById("search").value.toLowerCase();
+      const items = document.querySelectorAll(".item");
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(keyword) ? "block" : "none";
+      });
+    }
+
+    function handleDrop(event) {
+      event.preventDefault();
+      const file = event.dataTransfer.files[0];
+      alert(`File uploaded: ${file.name}`);
+    }
+    document.getElementById("drop-area").addEventListener("dragover", e => e.preventDefault());
+    document.getElementById("drop-area").addEventListener("drop", handleDrop);
+
+    function fetchData() {
+      fetch("https://jsonplaceholder.typicode.com/posts/1")
+        .then(res => res.json())
+        .then(data => console.log(data));
+    }
+
+    document.getElementById("timeZone").innerHTML = new Date().toLocaleDateString();
+  </script>
+</body>
+
+</html>

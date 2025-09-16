@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="korean">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recognition</title>
+</head>
+
+<body>
+    <h2>Voice Recognition Example</h2>
+    <button onclick="startRecognition()">Start Listening</button>
+    <p id="result"></p>
+
+    <script>
+        function startRecognition() {
+            // Check for browser compatibility with the Web Speech API
+            if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+                alert("Browser does not support the Web Speech API");
+                return;
+            }
+
+            // Use webkitSpeechRecognition if available, otherwise use SpeechRecognition
+            const recognition = 'webkitSpeechRecognition' in window
+                ? new webkitSpeechRecognition()
+                : new SpeechRecognition();
+
+            // Set properties for recognition
+            recognition.continuous = false; // Stop after a phrase
+            recognition.interimResults = false; // No interim results
+            recognition.lang = 'en-US'; // Specify the language
+
+            // Define the event handler for successful recognition
+            recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('result').textContent = `Heard: ${transcript}`;
+                console.log('Confidence: ' + event.results[0][0].confidence);
+            };
+
+            // Handle errors
+            recognition.onerror = function (event) {
+                console.error('Speech recognition error detected: ' + event.error);
+                alert('An error occurred during recognition: ' + event.error);
+            };
+
+            // Start the recognition process
+            recognition.start();
+        }
+    </script>
+</body>
+
+</html>

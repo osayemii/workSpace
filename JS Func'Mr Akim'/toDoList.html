@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery To-Do List</title>
+    <script src="jQueryLink.js"></script>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        #todo-list {
+            list-style: none;
+            padding: 0;
+            height: 20px;
+            font-size: 15px;
+        }
+
+        li{
+            display: flex;
+            width: 200px;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        li span {
+            padding: 5px 0;
+            align-content: center;
+            min-width: 190px;
+            max-width: 190px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .done {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .remove {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 15px;
+        }
+
+        #task-input {
+            padding: 5px;
+            width: 300px;
+        }
+
+        #add-task {
+            padding: 5px 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>My To-Do List</h2> <input type="text" id="task-input" placeholder="Enter a task"> <button id="add-task">Add</button>
+    <ul id="todo-list"></ul>
+
+    <script src="script1.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="bigbox">
+       <h2>WELCOME TO MY APPLE SITE</h2>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $(".bigbox").hide()
+      })
+    </script>
+
+    <script>
+        var names = new Array('James', 'Kevin', 'Brad'); 
+       function change_names(names) {
+        names[0]= 'Stuart';
+        }
+        function display_names() {
+        document.writeln('<h3> List of Student Names:</h3>'); 
+       document.write('<ul>');
+        for(var i=0; i <names.length; i++) {
+        document.write('<li>' + names[i]+ '</li>');
+        }
+        document.write('</ul>'); 
+       change_names(names);
+        document.write('<h3> List of Changed Students Names:</h3>'); 
+       document.write('<ul>');
+        for(var i=0; i<names.length; i++){
+        document.write('<li>' + names[i]+ '</li>');
+        }
+        document.write('</ul>');
+        }
+        display_names(names);
+        </script>
+</body>
+</html>

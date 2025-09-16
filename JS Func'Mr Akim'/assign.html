@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <ul>
+            <li>Green</li>
+            <li class="colors">Blue</li>
+            <li class="colors">Red</li>
+            <li>Violet</li>
+            <li>White</li>
+            <li>Purple</li>
+            <li>Pink</li>
+            <li>Orange</li>
+            <li class="colors">Yellow</li>
+            <li>Black</li>
+        </ul>
+
+        <button>CLICK TO HIDE PRIMARY COLORS</button>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("button").click(function () {
+                $(".colors").toggle()
+            })
+        })
+    </script>
+</body>
+</html>

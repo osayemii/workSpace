@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .firstUl {
+            display: flex;
+            padding: 20px 10px;
+            list-style: none;
+            /* position: fixed; */
+            /* top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%); */
+            background: #ededed;
+            width: 100vh;
+            justify-content: space-evenly;
+            z-index: 10;
+        }
+
+        .secondUl {
+            display: none;
+            position: absolute;
+            top: 100%;
+            /* Places the submenu right below the parent */
+            left: 0;
+            /* Aligns it to the left edge of the parent menu item */
+            background: #d6d1d1;
+            padding: 10px 20px;
+            list-style: none;
+            animation: forSec .1s;
+        }
+
+        @keyframes forSec {
+            0% {
+                top: 0;
+                bottom: 100%;
+            }
+
+            100% {
+                top: 100%;
+                bottom: 0;
+            }
+        }
+
+        .firstUl .eng:hover i {
+            animation: turnUp 1s;
+            transform: rotate(180deg);
+        }
+
+        @keyframes turnUp {
+            0% {
+                transform: rotate(90deg);
+            }
+        }
+
+        .firstUl .eng:hover .secondUl {
+            display: block;
+        }
+
+        .firstUl .eng:hover .secondUl li {
+            border-bottom: 1px solid red;
+        }
+
+        .firstUl .eng:hover {
+            border-bottom: 1px solid red;
+        }
+
+        li {
+            position: relative;
+            width: 80px;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul class="firstUl">
+            <li title="Maths">Maths</li>
+            <li class="eng">English &nbsp; <i class="fa fa-chevron-down"></i>
+                <ul class="secondUl">
+                    <li>First Eng</li>
+                    <li>Second Eng</li>
+                </ul>
+            </li>
+            <li>Physics</li>
+            <li>Biology</li>
+        </ul>
+    </nav>
+</body>
+
+</html>
