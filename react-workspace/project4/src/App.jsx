@@ -11,7 +11,7 @@ function App() {
   // }
 
   const appStyle = {
-    backgroundColor: isDark ? '#222' : '#f5f5f5',
+    backgroundColor: isDark ? '#000' : '#fff',
     color: isDark ? '#fff' : '#000',
     height: '50vh',
     display: 'flex',
@@ -72,7 +72,7 @@ function App() {
 
     <div style={appStyle}>
       <h1>{isDark ? 'Dark Mode 🌙' : 'Light Mode ☀️'}</h1>
-      <button onClick={() => setIsDark(prev => !prev)}>Toggle Mode</button>
+      <button style={isDark ? {background: 'white', color: 'black', outline: 'none'} : {background: 'black', color: 'white', outline: 'none'}} onClick={() => setIsDark(prev => !prev)}>Toggle Mode</button>
     </div>
 
     <div style={togMove.toggleMove}>

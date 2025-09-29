@@ -9,7 +9,18 @@ const display = document.getElementById("display");
 const displayApps = document.getElementById("displayApps");
 const displayNumbers = document.getElementById("displayNumbers");
 function displayClock() {
-    document.getElementById("menuTime").innerHTML = new Date().toLocaleTimeString()
+    // const timeDisplay = document.getElementById("menuTime");
+    // timeDisplay = new Date();
+    // const hours = new Date().getHours().toString().padStart(2, '0');
+    // const minutes = new Date().getMinutes().toString().padStart(2, '0');
+    // document.getElementById('menuTime').innerHTML = `${hours}:${minutes}`
+
+    const date = new Date();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const hourAndMin = `${hours}:${minutes}`;
+    console.log(hourAndMin);
+    document.getElementById('menuTime').innerHTML = hourAndMin;
 }
 setInterval(displayClock, 1000);
 document.getElementById("menuDate").innerHTML = new Date().toLocaleDateString();
