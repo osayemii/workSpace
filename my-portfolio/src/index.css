@@ -1,38 +1,87 @@
-@import 'tailwindcss';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.underline-slide{
-  transition: color 0.3s ease-in-out;
+html {
+  scroll-behavior: smooth;
 }
 
-.underline-slide::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  width: 0%;
-  background-color: #ef4444; /* Tailwind's red-500 */
-  transition: width 0.3s ease-in-out;
-}
-
-.underline-slide:hover::after {
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
   width: 100%;
-  /* color: #172030b6; */
 }
 
-.rotate{
-  animation: rotate 6s linear infinite;
+* {
+  box-sizing: border-box;
 }
 
-@keyframes rotate {
-  from{
-    transform: rotate(0deg);
-  }
-  to{
-    transform: rotate(360deg);
-  }
+/* Dark Theme (Default) */
+[data-theme="dark"] {
+  --bg-primary: #0a0e27;
+  --bg-secondary: #151932;
+  --text-color: #ffffff;
+  --text-secondary: #b4b4b4;
+  --primary-color: #6496ff;
+  --secondary-color: #8b5cf6;
+  --border-color: #2a2f4a;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f7fa;
+  --text-color: #1a1a1a;
+  --text-secondary: #6b7280;
+  --primary-color: #4f46e5;
+  --secondary-color: #7c3aed;
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
+/* Selection */
+::selection {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Smooth Transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

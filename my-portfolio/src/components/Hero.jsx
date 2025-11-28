@@ -1,20 +1,79 @@
-import profile from '../assets/react.svg';
+import { useEffect, useRef } from 'react';
+import './Hero.css';
 
-export default function App() {
+const Hero = () => {
+  const heroRef = useRef(null);
 
-    return (
-        <section className="min-h-[90vh] flex justify-center px-[20px] items-center bg-white dark:bg-[#172030c3]">
-            <div className="profile w-[40%] items-center flex justify-center">
-                <div className="rotate items-center flex justify-center bg-[#e6e9f2] dark:bg-[#172030] p-5 rounded-full">
-                    <img src={profile} alt="" className='w-[200px] h-[200px]' />
-                </div>
-            </div>
-            <div className="w-[40%] text-left text-black dark:text-white">
-                <h1 className="xl:text-[40px] text-[30px] font-bold">Hi, I'm Daniel</h1>
-                <h3 className="text-2xl font-semibold">A Web Developer</h3>
-                <p className="">A passionate developer creating modern and responsive web applications.</p>
-                <a href="#"><button className="rounded-md px-10 py-2 mt-3 bg-[#e6e9f2] dark:bg-[#172030] hover:underline cursor-pointer">View my work</button></a>
-            </div>
-        </section>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
     );
-}
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      if (heroRef.current) {
+        observer.unobserve(heroRef.current);
+      }
+    };
+  }, []);
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <section id="hero" className="hero" ref={heroRef}>
+      <div className="hero-content">
+        <div className="hero-text">
+          <h1 className="hero-title">
+            <span className="greeting">Hi, I'm</span>
+            <span className="name">Osayemi Daniel</span>
+            <span className="role">Full Stack Developer</span>
+          </h1>
+          <p className="hero-description">
+            I create beautiful, functional, and user-centered digital experiences.
+            Welcome to my portfolio where creativity meets technology.
+          </p>
+          <div className="hero-buttons">
+            <button className="btn btn-primary" onClick={() => scrollToSection('projects')}>
+              View My Work
+            </button>
+            <button className="btn btn-secondary" onClick={() => scrollToSection('contact')}>
+              Get In Touch
+            </button>
+          </div>
+        </div>
+        <div className="hero-image">
+          <div className="floating-shape shape-1"></div>
+          <div className="floating-shape shape-2"></div>
+          <div className="floating-shape shape-3"></div>
+        </div>
+      </div>
+      <div className="scroll-indicator">
+        <div className="mouse">
+          <div className="wheel"></div>
+        </div>
+        <div className="arrow">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;

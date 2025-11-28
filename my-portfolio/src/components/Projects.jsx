@@ -1,26 +1,117 @@
-import img1 from '../assets/react.svg'
+import { useEffect, useRef } from 'react';
+import { FiExternalLink, FiGithub } from 'react-icons/fi';
+import './Projects.css';
 
-const projects = [
-    { image: img1, title: "Portfolio Website", desc: "Personal website with React & Tailwind." },
-    { image: img1, title: "E-Commerce App", desc: "Full-stack shopping app." },
-    { image: img1, title: "Chat Application", desc: "Realtime chat using WebSockets." }
-];
+const Projects = () => {
+  const projectsRef = useRef(null);
 
-export default function Projects() {
-    return (
-        <section id="projects"
-            className="py-10 min-h-[50vh] bg-white dark:bg-[#172030c3] flex items-center flex-col text-black"
-        >
-            <h2 className="font-bold text-[40px]">Projects</h2>
-            <div className="grid grid-cols-3 gap-4 w-[900px]">
-                {projects.map((project, index) => (
-                    <div key={index} className="border p-3 bg-white">
-                        <img src={project.image} alt="image" className='w-full border-b-2 h-[170px] pb-2'/>
-                        <h3 className="font-semibold pt-2">{project.title}</h3>
-                        <p className="text-[14px]">{project.desc}</p>
-                    </div>
-                ))}
-            </div>
-        </section>
+  const projects = [
+    {
+      title: 'E-Commerce Platform',
+      description: 'A full-stack e-commerce solution with payment integration, user authentication, and admin dashboard.',
+      tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+      image: '🛒',
+      link: '#'
+    },
+    {
+      title: 'Task Management App',
+      description: 'A collaborative task management application with real-time updates and team collaboration features.',
+      tech: ['React', 'Firebase', 'TypeScript'],
+      image: '📋',
+      link: '#'
+    },
+    {
+      title: 'Social Media Dashboard',
+      description: 'Analytics dashboard for social media metrics with beautiful data visualizations and insights.',
+      tech: ['React', 'D3.js', 'Express'],
+      image: '📊',
+      link: '#'
+    },
+    {
+      title: 'Weather App',
+      description: 'Real-time weather application with location-based forecasts and beautiful UI design.',
+      tech: ['React', 'API Integration', 'CSS'],
+      image: '🌤️',
+      link: '#'
+    },
+    {
+      title: 'Portfolio Website',
+      description: 'A modern, responsive portfolio website showcasing projects and skills with smooth animations.',
+      tech: ['React', 'Vite', 'CSS'],
+      image: '💼',
+      link: '#'
+    },
+    {
+      title: 'Chat Application',
+      description: 'Real-time chat application with multiple rooms, file sharing, and emoji support.',
+      tech: ['React', 'Socket.io', 'Node.js'],
+      image: '💬',
+      link: '#'
+    }
+  ];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
     );
-}
+
+    if (projectsRef.current) {
+      const projectCards = projectsRef.current.querySelectorAll('.project-card');
+      projectCards.forEach((card) => observer.observe(card));
+    }
+
+    return () => {
+      if (projectsRef.current) {
+        const projectCards = projectsRef.current.querySelectorAll('.project-card');
+        projectCards.forEach((card) => observer.unobserve(card));
+      }
+    };
+  }, []);
+
+  return (
+    <section id="projects" className="projects" ref={projectsRef}>
+      <div className="container">
+        <h2 className="section-title">Featured Projects</h2>
+        <div className="projects-grid">
+          {projects.map((project, index) => (
+            <div
+              key={index}
+              className="project-card"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="project-image">
+                <div className="project-icon">{project.image}</div>
+              </div>
+              <div className="project-content">
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-description">{project.description}</p>
+                <div className="project-tech">
+                  {project.tech.map((tech, techIndex) => (
+                    <span key={techIndex} className="tech-tag">{tech}</span>
+                  ))}
+                </div>
+                <div className="project-links">
+                  <a href={project.link} className="project-link" target="_blank" rel="noopener noreferrer">
+                    <FiExternalLink /> Live Demo
+                  </a>
+                  <a href={project.link} className="project-link" target="_blank" rel="noopener noreferrer">
+                    <FiGithub /> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Projects;
