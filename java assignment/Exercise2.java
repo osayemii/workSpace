@@ -1,26 +1,12 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * Exercise 2: Producer-Consumer Problem with Multithreading
- * 
- * This program implements a simple producer-consumer problem:
- * - Shared buffer (queue)
- * - Producer thread adds items to the buffer
- * - Consumer thread removes items from the buffer
- * Uses proper synchronization to prevent race conditions
- */
 public class Exercise2 {
     private final Queue<Integer> buffer = new LinkedList<>();
     private final int BUFFER_SIZE = 5;
     private final Object lock = new Object();
     private int itemCount = 0;
     private final int MAX_ITEMS = 20;
-
-    public static void main(String[] args) {
-        Exercise2 exercise = new Exercise2();
-        exercise.startProducerConsumer();
-    }
 
     public void startProducerConsumer() {
         // Producer thread
@@ -101,8 +87,11 @@ public class Exercise2 {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-        System.out.println("\nExercise 2 completed!");
+    }
+    
+    public static void main(String[] args) {
+        Exercise2 exercise = new Exercise2();
+        exercise.startProducerConsumer();
     }
 }
 
