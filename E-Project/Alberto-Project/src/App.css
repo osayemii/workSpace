@@ -1,7 +1,0 @@
-/* Add padding to main content when header is fixed on mobile */
-@media (max-width: 1000px) {
-  main {
-    padding-top: 80px;
-  }
-}
-
