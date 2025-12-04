@@ -41,7 +41,7 @@ const MessageList = ({ messages, currentUser }) => {
         messages.map((message) => (
           <div
             key={message.id}
-            className={`message ${message.username === currentUser ? 'own-message' : ''}`}
+            className={`message ${message.username === currentUser ? 'own-message' : ''} ${message.type === 'file' ? 'file-wrapper' : ''}`}
           >
             <div className="message-content">
               {message.username !== currentUser && (

@@ -32,6 +32,10 @@
   animation: messageSlideIn 0.3s ease-out;
 }
 
+.message.file-wrapper {
+  width: 50px;
+}
+
 @keyframes messageSlideIn {
   from {
     opacity: 0;
@@ -98,6 +102,18 @@
   background: var(--bg-primary);
   border-radius: 8px;
   border: 1px solid var(--border-color);
+}
+
+.image-preview {
+  width: 100%;
+}
+
+.shared-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  object-fit: cover;
 }
 
 .message.own-message .file-message {
@@ -172,6 +188,10 @@
     max-width: 85%;
   }
 
+  .message.file-wrapper {
+    max-width: 50%;
+  }
+
   .message-content {
     padding: 0.6rem 0.8rem;
   }
@@ -198,6 +218,10 @@
 
   .message {
     max-width: 90%;
+  }
+
+   .message.file-wrapper {
+    max-width: 50%;
   }
 
   .message-content {

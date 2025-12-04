@@ -4,8 +4,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at top, #7c2d12 0, #431407 45%, #1c0a00 100%);
-  color: #fff7ed;
+  background: radial-gradient(circle at top, #0a0e27 0, #020617 55%, #000 100%);
+  color: #ffffff;
   padding: 1.5rem;
   box-sizing: border-box;
 }
@@ -13,11 +13,11 @@
 .app {
   width: 100%;
   max-width: 450px;
-  background: rgba(30, 15, 5, 0.95);
+  background: rgba(21, 25, 50, 0.98);
   border-radius: 1.25rem;
   padding: 2rem 1.75rem;
-  box-shadow: 0 25px 50px -12px rgba(124, 45, 18, 0.6);
-  border: 1px solid rgba(251, 146, 60, 0.4);
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.9);
+  border: 1px solid #2a2f4a;
 }
 
 .title {
@@ -38,22 +38,22 @@
   flex: 1;
   padding: 0.65rem 0.9rem;
   border-radius: 0.75rem;
-  border: 1px solid rgba(251, 146, 60, 0.5);
-  background: rgba(30, 15, 5, 0.9);
-  color: #fff7ed;
+  border: 1px solid #2a2f4a;
+  background: rgba(10, 14, 39, 0.95);
+  color: #ffffff;
   font-size: 0.95rem;
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .input::placeholder {
-  color: #d97706;
+  color: #9ca3af;
 }
 
 .input:focus {
-  border-color: #f97316;
-  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.4);
-  background: rgba(30, 15, 5, 1);
+  border-color: #6496ff;
+  box-shadow: 0 0 0 1px rgba(100, 150, 255, 0.4);
+  background: rgba(10, 14, 39, 1);
 }
 
 .button-group {
@@ -75,26 +75,26 @@
 }
 
 .button.primary {
-  background: linear-gradient(135deg, #f97316, #fb923c);
-  color: #1c0a00;
-  box-shadow: 0 10px 25px -8px rgba(249, 115, 22, 0.6);
+  background: linear-gradient(135deg, #6496ff, #8b5cf6);
+  color: #0b1020;
+  box-shadow: 0 10px 25px -8px rgba(100, 150, 255, 0.6);
 }
 
 .button.secondary {
-  background: rgba(30, 15, 5, 0.9);
-  color: #fff7ed;
-  border: 1px solid rgba(251, 146, 60, 0.6);
+  background: rgba(10, 14, 39, 0.95);
+  color: #ffffff;
+  border: 1px solid #2a2f4a;
 }
 
 .button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 18px 35px -12px rgba(249, 115, 22, 0.7);
+  box-shadow: 0 18px 35px -12px rgba(100, 150, 255, 0.7);
   filter: brightness(1.1);
 }
 
 .button:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 12px 25px -10px rgba(124, 45, 18, 0.8);
+  box-shadow: 0 12px 25px -10px rgba(15, 23, 42, 0.9);
 }
 
 .button:disabled {
@@ -119,9 +119,9 @@
 .weather-card {
   margin-top: 0.5rem;
   padding: 1.3rem 1.1rem 1.1rem;
-  background: radial-gradient(circle at top, #431407, #1c0a00);
+  background: radial-gradient(circle at top, #151932, #0a0e27);
   border-radius: 1rem;
-  border: 1px solid rgba(251, 146, 60, 0.5);
+  border: 1px solid #2a2f4a;
   text-align: left;
 }
 
@@ -142,7 +142,7 @@
 .weather-source {
   margin: 0;
   font-size: 0.8rem;
-  color: #fb923c;
+  color: #8b5cf6;
 }
 
 .weather-icon {
@@ -161,7 +161,7 @@
 .temp-value {
   font-size: 2.2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #f97316, #fb923c);
+  background: linear-gradient(135deg, #6496ff, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -170,14 +170,14 @@
 .weather-feels {
   margin: 0.1rem 0;
   font-size: 0.95rem;
-  color: #fed7aa;
+  color: #e5e7eb;
 }
 
 .weather-desc {
   margin: 0.2rem 0 0;
   font-size: 0.9rem;
   text-transform: capitalize;
-  color: #fed7aa;
+  color: #e5e7eb;
 }
 
 .weather-details {
@@ -194,11 +194,11 @@
 }
 
 .detail-label {
-  color: #fb923c;
+  color: #9ca3af;
 }
 
 .detail-value {
-  color: #fff7ed;
+  color: #ffffff;
   font-weight: 500;
 }
 

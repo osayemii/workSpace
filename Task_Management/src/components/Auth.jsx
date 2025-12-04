@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/config';
-import { FiMail, FiLock, FiUser } from 'react-icons/fi';
+import { FiMail, FiLock, FiUser, FiEye, FiEyeOff } from 'react-icons/fi';
 import './Auth.css';
 
 const Auth = ({ onAuthSuccess }) => {
@@ -11,6 +11,7 @@ const Auth = ({ onAuthSuccess }) => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +50,7 @@ const Auth = ({ onAuthSuccess }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required={!isLogin}
-                style={{ padding: '15px 15px 15px 45px' }}
+                style={{ paddingLeft: '45px' }}
               />
             </div>
           )}
@@ -62,20 +63,28 @@ const Auth = ({ onAuthSuccess }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              style={{ padding: '15px 15px 15px 45px' }}
+              style={{ paddingLeft: '45px' }}
             />
           </div>
 
           <div className="form-group">
             <FiLock className="form-icon" />
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{ padding: '15px 15px 15px 45px' }}
+              style={{ paddingLeft: '45px' }}
             />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </button>
           </div>
 
           {error && <div className="error-message">{error}</div>}
@@ -106,6 +115,3 @@ const Auth = ({ onAuthSuccess }) => {
 };
 
 export default Auth;
-
-
-
