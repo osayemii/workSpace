@@ -50,23 +50,52 @@ const MessageList = ({ messages, currentUser }) => {
               
               {message.type === 'file' ? (
                 <div className="file-message">
-                  <div className="file-icon">
-                    <FiFile />
-                  </div>
-                  <div className="file-info">
-                    <div className="file-name">{message.fileName}</div>
-                    <div className="file-meta">
-                      {formatFileSize(message.fileSize)} • {message.fileType}
+                  {message.fileType?.startsWith('image/') ? (
+                    // Display image preview
+                    <div className="image-preview">
+                      <img 
+                        src={message.fileUrl} 
+                        alt={message.fileName}
+                        className="shared-image"
+                        onClick={() => window.open(message.fileUrl, '_blank')}
+                      />
+                      <div className="image-info">
+                        <div className="file-name">{message.fileName}</div>
+                        <div className="file-meta">
+                          {formatFileSize(message.fileSize)}
+                        </div>
+                      </div>
+                      <a
+                        href={message.fileUrl}
+                        download={message.fileName}
+                        className="file-download"
+                        title="Download image"
+                      >
+                        <FiDownload />
+                      </a>
                     </div>
-                  </div>
-                  <a
-                    href={`http://localhost:3001${message.fileUrl}`}
-                    download
-                    className="file-download"
-                    title="Download file"
-                  >
-                    <FiDownload />
-                  </a>
+                  ) : (
+                    // Display file info for non-images
+                    <>
+                      <div className="file-icon">
+                        <FiFile />
+                      </div>
+                      <div className="file-info">
+                        <div className="file-name">{message.fileName}</div>
+                        <div className="file-meta">
+                          {formatFileSize(message.fileSize)} • {message.fileType || 'File'}
+                        </div>
+                      </div>
+                      <a
+                        href={message.fileUrl}
+                        download={message.fileName}
+                        className="file-download"
+                        title="Download file"
+                      >
+                        <FiDownload />
+                      </a>
+                    </>
+                  )}
                 </div>
               ) : (
                 <div className="text-message">{message.message}</div>

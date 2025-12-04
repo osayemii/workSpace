@@ -49,9 +49,9 @@ const Projects = () => {
     {
       title: 'Chat Application',
       description: 'A real-time chat application with multiple rooms, file sharing, and emoji support. This project is still in development.',
-      tech: ['React', 'Socket.io', 'Node.js'],
+      tech: ['React', 'Vite', 'JavaScript'],
       image: '💬',
-      link: '#',
+      link: 'https://rad-bublanina-495d83.netlify.app/',
       githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Chat-Application'
     }
   ];

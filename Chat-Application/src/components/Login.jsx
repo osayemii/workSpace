@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { getRooms, addRoom, onStorageChange } from '../services/chatStorage';
 import './Login.css';
 
-const Login = ({ onLogin, socket }) => {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('General');
   const [availableRooms, setAvailableRooms] = useState(['General', 'Random', 'Tech', 'Gaming']);
@@ -10,21 +11,21 @@ const Login = ({ onLogin, socket }) => {
   const [showNewRoomInput, setShowNewRoomInput] = useState(false);
 
   useEffect(() => {
-    // Listen for room list updates
-    socket.on('roomList', (rooms) => {
-      setAvailableRooms(rooms);
+    // Load initial rooms
+    const rooms = getRooms();
+    setAvailableRooms(rooms);
+    if (rooms.length > 0 && !rooms.includes(selectedRoom)) {
+      setSelectedRoom(rooms[0]);
+    }
+
+    // Listen for room updates (cross-tab)
+    const cleanup = onStorageChange(() => {
+      const updatedRooms = getRooms();
+      setAvailableRooms(updatedRooms);
     });
 
-    // Get initial room list
-    fetch('http://localhost:3001/api/rooms')
-      .then(res => res.json())
-      .then(rooms => setAvailableRooms(rooms))
-      .catch(err => console.error('Error fetching rooms:', err));
-
-    return () => {
-      socket.off('roomList');
-    };
-  }, [socket]);
+    return cleanup;
+  }, [selectedRoom]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,10 +37,12 @@ const Login = ({ onLogin, socket }) => {
   const handleCreateRoom = (e) => {
     e.preventDefault();
     if (newRoomName.trim() && !availableRooms.includes(newRoomName.trim())) {
-      socket.emit('createRoom', newRoomName.trim());
-      setSelectedRoom(newRoomName.trim());
-      setNewRoomName('');
-      setShowNewRoomInput(false);
+      const success = addRoom(newRoomName.trim());
+      if (success) {
+        setSelectedRoom(newRoomName.trim());
+        setNewRoomName('');
+        setShowNewRoomInput(false);
+      }
     }
   };
 

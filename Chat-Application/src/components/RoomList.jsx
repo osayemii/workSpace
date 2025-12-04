@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { FiHash, FiPlus } from 'react-icons/fi';
+import { addRoom } from '../services/chatStorage';
 import './RoomList.css';
 
-const RoomList = ({ rooms, currentRoom, onRoomChange, socket }) => {
+const RoomList = ({ rooms, currentRoom, onRoomChange }) => {
   const [showNewRoomInput, setShowNewRoomInput] = useState(false);
   const [newRoomName, setNewRoomName] = useState('');
 
   const handleCreateRoom = (e) => {
     e.preventDefault();
     if (newRoomName.trim() && !rooms.includes(newRoomName.trim())) {
-      socket.emit('createRoom', newRoomName.trim());
-      onRoomChange(newRoomName.trim());
-      setNewRoomName('');
-      setShowNewRoomInput(false);
+      const success = addRoom(newRoomName.trim());
+      if (success) {
+        onRoomChange(newRoomName.trim());
+        setNewRoomName('');
+        setShowNewRoomInput(false);
+      }
     }
   };
 
