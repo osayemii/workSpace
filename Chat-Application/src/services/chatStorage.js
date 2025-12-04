@@ -56,7 +56,13 @@ export const getMessages = (room) => {
   try {
     const allMessages = localStorage.getItem(STORAGE_KEYS.MESSAGES);
     const messages = allMessages ? JSON.parse(allMessages) : {};
-    return messages[room] || [];
+    const roomMessages = messages[room] || [];
+    // Ensure messages are sorted by timestamp (oldest first)
+    return roomMessages.sort((a, b) => {
+      const timeA = new Date(a.timestamp).getTime();
+      const timeB = new Date(b.timestamp).getTime();
+      return timeA - timeB;
+    });
   } catch (error) {
     console.error('Error getting messages:', error);
     return [];
@@ -80,15 +86,25 @@ export const saveMessage = (room, message) => {
     
     messages[room].push(messageWithId);
     
-    // Keep only last 100 messages per room
-    if (messages[room].length > 100) {
-      messages[room] = messages[room].slice(-100);
+    // Sort messages by timestamp to maintain chronological order
+    messages[room].sort((a, b) => {
+      const timeA = new Date(a.timestamp).getTime();
+      const timeB = new Date(b.timestamp).getTime();
+      return timeA - timeB;
+    });
+    
+    // Keep only last 500 messages per room (increased from 100 for better history)
+    if (messages[room].length > 500) {
+      messages[room] = messages[room].slice(-500);
     }
     
     localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(messages));
     
     // Trigger storage event for cross-tab communication
+    // Note: 'storage' event only fires in other tabs, not the current tab
+    // So we dispatch a custom event for same-tab listeners
     window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new CustomEvent('chatStorageUpdate', { detail: { room } }));
     
     return messageWithId;
   } catch (error) {

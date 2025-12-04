@@ -13,19 +13,27 @@ import {
 } from '../services/chatStorage';
 import './ChatRoom.css';
 
-const ChatRoom = ({ user, room, onRoomChange, onLogout }) => {
+const ChatRoom = ({ user: firebaseUser, room, onRoomChange, onLogout }) => {
+  // Get display name from Firebase user
+  const user = firebaseUser?.displayName || firebaseUser?.email?.split('@')[0] || 'User';
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [availableRooms, setAvailableRooms] = useState([]);
   const [typingUsers, setTypingUsers] = useState(new Set());
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Load messages and users when room changes
+  // Load messages and users when room changes or component mounts
   useEffect(() => {
     if (room) {
-      // Load messages for current room
+      // Load messages for current room immediately
       const roomMessages = getMessages(room);
-      setMessages(roomMessages);
+      // Sort messages by timestamp to ensure chronological order
+      const sortedMessages = roomMessages.sort((a, b) => {
+        const timeA = new Date(a.timestamp).getTime();
+        const timeB = new Date(b.timestamp).getTime();
+        return timeA - timeB;
+      });
+      setMessages(sortedMessages);
       
       // Load users in current room
       const roomUsers = getUsersInRoom(room);
@@ -35,14 +43,15 @@ const ChatRoom = ({ user, room, onRoomChange, onLogout }) => {
       const rooms = getRooms();
       setAvailableRooms(rooms);
     }
-  }, [room]);
+  }, [room, user]);
 
-  // Listen for storage changes (cross-tab communication)
+  // Listen for storage changes (cross-tab and same-tab communication)
   useEffect(() => {
     const handleStorageChange = () => {
       if (room) {
         // Reload messages from storage to get latest state
         const roomMessages = getMessages(room);
+        
         // Use functional update to ensure we get the latest state
         setMessages(prev => {
           // Check if messages actually changed to avoid unnecessary re-renders
@@ -63,8 +72,23 @@ const ChatRoom = ({ user, room, onRoomChange, onLogout }) => {
       }
     };
 
+    // Listen for cross-tab changes (storage event)
     const cleanup = onStorageChange(handleStorageChange);
-    return cleanup;
+    
+    // Also listen for custom events (for same-tab updates)
+    const handleCustomStorage = (event) => {
+      // Only update if the event is for the current room
+      if (!event.detail || event.detail.room === room) {
+        handleStorageChange();
+      }
+    };
+    
+    window.addEventListener('chatStorageUpdate', handleCustomStorage);
+    
+    return () => {
+      cleanup();
+      window.removeEventListener('chatStorageUpdate', handleCustomStorage);
+    };
   }, [room]);
 
   const handleSendMessage = (message, type = 'text', fileData = null) => {
@@ -88,7 +112,13 @@ const ChatRoom = ({ user, room, onRoomChange, onLogout }) => {
         // Reload messages from storage to avoid duplicates
         // This ensures we get the latest state including any cross-tab updates
         const updatedMessages = getMessages(room);
-        setMessages(updatedMessages);
+        // Sort messages by timestamp
+        const sortedMessages = updatedMessages.sort((a, b) => {
+          const timeA = new Date(a.timestamp).getTime();
+          const timeB = new Date(b.timestamp).getTime();
+          return timeA - timeB;
+        });
+        setMessages(sortedMessages);
       }
     }
   };

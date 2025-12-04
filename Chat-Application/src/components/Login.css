@@ -70,6 +70,7 @@
 }
 
 .form-group {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -81,6 +82,23 @@
   font-size: 0.9rem;
 }
 
+.form-group:has(.form-icon) {
+  position: relative;
+}
+
+.form-icon {
+  position: absolute;
+  left: 15px;
+  bottom: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  z-index: 1;
+  pointer-events: none;
+  height: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
 .form-group input,
 .form-group select {
   padding: 0.75rem 1rem;
@@ -90,6 +108,31 @@
   color: var(--text-color);
   font-size: 1rem;
   transition: all 0.3s ease;
+}
+
+.form-group input[style*="paddingLeft"] {
+  padding-left: 45px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  bottom: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: color 0.3s ease;
+  height: 1.2rem;
+}
+
+.toggle-password:hover {
+  color: var(--primary-color);
 }
 
 .form-group input:focus,
@@ -173,9 +216,55 @@
   margin-top: 0.5rem;
 }
 
-.btn-login:hover {
+.btn-login:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(100, 150, 255, 0.3);
+}
+
+.btn-login:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message {
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #ef4444;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+.auth-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.auth-footer p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.toggle-auth {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  padding: 0;
+  margin-left: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.toggle-auth:hover {
+  color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {

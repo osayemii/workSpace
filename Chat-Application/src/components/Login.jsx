@@ -1,14 +1,23 @@
 import { useState, useEffect } from 'react';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/config';
 import ThemeToggle from './ThemeToggle';
 import { getRooms, addRoom, onStorageChange } from '../services/chatStorage';
+import { FiMail, FiLock, FiUser, FiEye, FiEyeOff } from 'react-icons/fi';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('General');
   const [availableRooms, setAvailableRooms] = useState(['General', 'Random', 'Tech', 'Gaming']);
   const [newRoomName, setNewRoomName] = useState('');
   const [showNewRoomInput, setShowNewRoomInput] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     // Load initial rooms
@@ -27,10 +36,43 @@ const Login = ({ onLogin }) => {
     return cleanup;
   }, [selectedRoom]);
 
-  const handleSubmit = (e) => {
+  // Check if user is already authenticated
+  useEffect(() => {
+    if (auth.currentUser) {
+      // User is already logged in, they just need to select a room
+      setEmail(auth.currentUser.email || '');
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username.trim() && selectedRoom) {
-      onLogin(username.trim(), selectedRoom);
+    
+    // If user is authenticated, just select room
+    if (auth.currentUser && selectedRoom) {
+      onLogin(selectedRoom);
+      return;
+    }
+    
+    // Otherwise, authenticate first
+    setLoading(true);
+    setError('');
+
+    try {
+      if (isLogin) {
+        // Sign in existing user
+        await signInWithEmailAndPassword(auth, email, password);
+      } else {
+        // Create new user account
+        await createUserWithEmailAndPassword(auth, email, password);
+      }
+      // After successful auth, proceed with room selection
+      if (selectedRoom) {
+        onLogin(selectedRoom);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,21 +96,54 @@ const Login = ({ onLogin }) => {
       <div className="login-card">
         <div className="login-header">
           <h1>💬 Chat Application</h1>
-          <p>Join a room and start chatting!</p>
+          <p>{isLogin ? 'Sign in to continue' : 'Create an account to get started'}</p>
         </div>
         
         <form onSubmit={handleSubmit} className="login-form">
+          {!isLogin && (
+            <div className="form-group">
+              <FiUser className="form-icon" />
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required={!isLogin}
+                style={{ paddingLeft: '45px' }}
+              />
+            </div>
+          )}
+
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <FiMail className="form-icon" />
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
-              autoFocus
+              style={{ paddingLeft: '45px' }}
             />
+          </div>
+
+          <div className="form-group">
+            <FiLock className="form-icon" />
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={{ paddingLeft: '45px' }}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </button>
           </div>
 
           <div className="form-group">
@@ -127,10 +202,28 @@ const Login = ({ onLogin }) => {
             </button>
           )}
 
-          <button type="submit" className="btn-login">
-            Join Chat
+          {error && <div className="error-message">{error}</div>}
+
+          <button type="submit" className="btn-login" disabled={loading}>
+            {loading ? 'Loading...' : isLogin ? 'Sign In' : 'Sign Up'}
           </button>
         </form>
+
+        <div className="auth-footer">
+          <p>
+            {isLogin ? "Don't have an account? " : 'Already have an account? '}
+            <button
+              type="button"
+              className="toggle-auth"
+              onClick={() => {
+                setIsLogin(!isLogin);
+                setError('');
+              }}
+            >
+              {isLogin ? 'Sign Up' : 'Sign In'}
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );
