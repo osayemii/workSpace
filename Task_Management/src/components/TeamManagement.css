@@ -1,0 +1,381 @@
+.team-management-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  padding: 20px;
+}
+
+[data-theme="light"] .team-management-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.team-management-modal {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 25px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 20px 60px var(--shadow-color);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+}
+
+.team-header h2 {
+  color: var(--text-primary);
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 1.8rem);
+}
+
+.close-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.close-btn:hover {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+  transform: rotate(90deg);
+  border-color: var(--accent-primary);
+}
+
+.team-content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 25px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.section-header h3 {
+  color: var(--text-primary);
+  margin: 0;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+}
+
+.create-team-btn,
+.invite-btn {
+  background: var(--accent-gradient);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.create-team-btn:hover,
+.invite-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(6, 182, 212, 0.4);
+}
+
+.teams-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.team-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.team-item:hover {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+}
+
+.team-item.active {
+  background: rgba(6, 182, 212, 0.2);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.team-item svg {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.empty-teams {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-tertiary);
+}
+
+.team-members {
+  display: flex;
+  flex-direction: column;
+}
+
+.invite-form {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.invite-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.invite-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+.invite-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.send-invite-btn,
+.cancel-invite-btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.send-invite-btn {
+  background: var(--accent-gradient);
+  color: #fff;
+}
+
+.send-invite-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(6, 182, 212, 0.4);
+}
+
+.cancel-invite-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.cancel-invite-btn:hover {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+}
+
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.member-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+}
+
+.member-item:hover {
+  background: var(--hover-bg);
+  transform: translateX(5px);
+  border-color: var(--accent-primary);
+}
+
+.member-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.member-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.member-name {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.member-email {
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.assign-btn {
+  background: rgba(6, 182, 212, 0.2);
+  border: 1px solid var(--accent-primary);
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: var(--accent-primary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.assign-btn:hover {
+  background: rgba(6, 182, 212, 0.3);
+  color: #fff;
+}
+
+.empty-members {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-tertiary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .team-management-overlay {
+    padding: 15px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .team-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .team-management-modal {
+    width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  .team-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .member-item {
+    flex-wrap: wrap;
+  }
+
+  .assign-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-management-modal {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .create-team-btn,
+  .invite-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

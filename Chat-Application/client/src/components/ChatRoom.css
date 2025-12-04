@@ -1,0 +1,240 @@
+.chat-room {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: var(--bg-primary);
+}
+
+.chat-sidebar {
+  width: 300px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sidebar-header h2 {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-logout:hover {
+  background: var(--bg-primary);
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+
+.user-info {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.25rem;
+}
+
+.user-status {
+  font-size: 0.85rem;
+  color: var(--success-color);
+}
+
+.room-section,
+.users-section {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.room-section h3,
+.users-section h3 {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.user-item:hover {
+  background: var(--bg-primary);
+}
+
+.user-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success-color);
+}
+
+.you-badge {
+  margin-left: auto;
+  padding: 0.2rem 0.5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.chat-header h2 {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.typing-indicator {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  min-height: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .chat-room {
+    flex-direction: column;
+  }
+
+  .chat-sidebar {
+    width: 100%;
+    max-height: 40vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sidebar-header {
+    padding: 1rem;
+  }
+
+  .sidebar-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .user-info {
+    padding: 1rem;
+  }
+
+  .room-section,
+  .users-section {
+    padding: 1rem;
+    max-height: 20vh;
+    overflow-y: auto;
+  }
+
+  .chat-main {
+    flex: 1;
+    min-height: 60vh;
+  }
+
+  .chat-header {
+    padding: 1rem;
+  }
+
+  .chat-header h2 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-sidebar {
+    max-height: 35vh;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .user-name {
+    font-size: 0.9rem;
+  }
+
+  .user-status {
+    font-size: 0.75rem;
+  }
+}
+

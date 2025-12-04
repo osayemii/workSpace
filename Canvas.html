@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 2px solid;
+            position: absolute;
+            top: 0;
+            z-index: -1;
+        }
+
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+    <h1>Hello World</h1>
+    <script>
+        const canvas = document.querySelector('canvas');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var ctx = canvas.getContext('2d');
+
+        // ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'
+        // ctx.fillRect(100, 100, 100, 100);
+        // ctx.fillStyle = 'rgba(0, 255, 0, 0.5)'
+        // ctx.fillRect(250, 150, 100, 100);
+        // ctx.fillStyle = 'rgba(0, 0, 255, 0.5)'
+        // ctx.fillRect(300, 400, 100, 100);
+
+        // // Line
+        // ctx.beginPath();
+        // ctx.moveTo(200, 150);
+        // ctx.lineTo(250, 200);
+
+        // ctx.moveTo(300, 250);
+        // ctx.lineTo(350, 400);
+
+        // ctx.moveTo(300, 450);
+        // ctx.lineTo(150, 200);
+
+        // ctx.strokeStyle = '#098789'
+        // ctx.stroke();
+
+
+        // // Arc / Circle
+        // for (var i = 0; i < 5; i++) {
+        //     var x = Math.random() * window.innerWidth;
+        //     var y = Math.random() * window.innerHeight;
+        //     var Colors = ["red", "green", "blue", "yellow", "purple", "pink", "orange", "brown", "gray"];
+        //     var randomColor = Colors[Math.floor(Math.random() * Colors.length)];
+        //     ctx.fillStyle = randomColor;
+
+        //     ctx.beginPath();
+        //     ctx.arc(x, y, 30, 0, Math.PI * 2, true);
+        //     ctx.fill();
+        // }
+
+        const mouse = {
+            x: undefined,
+            y: undefined
+        }
+
+        window.addEventListener('mousemove', function (e) {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        })
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Create an array to hold multiple circles
+        var circles = [];
+        var circleCount = 100; // Change this number to control how many circles
+
+        // Create multiple circles
+        for (var i = 0; i < circleCount; i++) {
+            circles.push({
+                x: Math.random() * innerWidth,
+                y: Math.random() * innerHeight,
+                dx: (Math.random() - 0.5) * 8,
+                dy: (Math.random() - 0.5) * 8,
+                radius: Math.random() * 10 + 5, // Random radius between 10 and 30
+                minRadius: Math.random() * 10 + 5, // Minimum radius
+                maxRadius: Math.random() * 20 + 20, // Maximum radius
+                color: `hsl(${Math.random() * 360}, 70%, 50%)` // Random colors
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+            // Loop through all circles and update/draw each one
+            for (var i = 0; i < circles.length; i++) {
+                var circle = circles[i];
+
+                // Update position first
+                circle.x += circle.dx;
+                circle.y += circle.dy;
+
+                // Bounce off walls (check after position update)
+                if (circle.x + circle.radius > innerWidth || circle.x - circle.radius < 0) {
+                    circle.dx = -circle.dx;
+                    // Keep circle within bounds
+                    if (circle.x + circle.radius > innerWidth) circle.x = innerWidth - circle.radius;
+                    if (circle.x - circle.radius < 0) circle.x = circle.radius;
+                }
+
+                if (circle.y + circle.radius > innerHeight || circle.y - circle.radius < 0) {
+                    circle.dy = -circle.dy;
+                    // Keep circle within bounds
+                    if (circle.y + circle.radius > innerHeight) circle.y = innerHeight - circle.radius;
+                    if (circle.y - circle.radius < 0) circle.y = circle.radius;
+                }
+
+                // Mouse interaction with radius bounds
+                if (mouse.x !== undefined && mouse.y !== undefined) {
+                    const distance = Math.sqrt(
+                        Math.pow(mouse.x - circle.x, 2) + 
+                        Math.pow(mouse.y - circle.y, 2)
+                    );
+                    
+                    if (distance < 100) {
+                        if (circle.radius < circle.maxRadius) {
+                            circle.radius += 1;
+                        }
+                    } else {
+                        if (circle.radius > circle.minRadius) {
+                            circle.radius -= 1;
+                        }
+                    }
+                }
+
+                // Draw the circle
+                ctx.beginPath();
+                ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = circle.color;
+                ctx.fill();
+            }
+        }
+        
+
+        animate();
+    </script>
+</body>
+
+</html>
