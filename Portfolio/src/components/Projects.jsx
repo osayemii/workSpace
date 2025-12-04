@@ -12,7 +12,7 @@ const Projects = () => {
       tech: ['React', 'JavaScript', 'HTML', 'CSS'],
       image: '🕰️',
       link: 'https://subtle-marigold-dc2d26.netlify.app/',
-      githublink: '#'
+      githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Alberto_Watch_Company'
     },
     {
       title: 'Task Management App',
@@ -20,7 +20,7 @@ const Projects = () => {
       tech: ['React', 'Firebase', 'JavaScript'],
       image: '📋',
       link: '#',
-      githublink: '#'
+      githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Task_Management'
     },
     {
       title: 'Wayby Classic Furniture',
@@ -28,7 +28,7 @@ const Projects = () => {
       tech: ['React', 'Vite', 'JavaScript'],
       image: '🪑',
       link: '#',
-      githublink: '#'
+      githublink: 'https://github.com/osayemii/Semester1/tree/main/REACT/Wayby'
     },
     {
       title: 'Weather App',
@@ -36,7 +36,7 @@ const Projects = () => {
       tech: ['React', 'API Integration', 'CSS'],
       image: '🌤️',
       link: '#',
-      githublink: '#'
+      githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Weather-App'
     },
     {
       title: 'Portfolio Website',
@@ -44,7 +44,7 @@ const Projects = () => {
       tech: ['React', 'Vite', 'CSS'],
       image: '💼',
       link: '#',
-      githublink: '#'
+      githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Portfolio'
     },
     {
       title: 'Chat Application',
@@ -52,7 +52,7 @@ const Projects = () => {
       tech: ['React', 'Socket.io', 'Node.js'],
       image: '💬',
       link: '#',
-      githublink: '#'
+      githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Chat-Application'
     }
   ];
 

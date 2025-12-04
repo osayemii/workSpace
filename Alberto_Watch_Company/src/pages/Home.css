@@ -1,0 +1,123 @@
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('/public/Homebackround.jpeg'), #1a1a1a;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    color: rgb(218, 216, 216);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+}
+
+.hero-content h1 {
+    font-size: clamp(3rem, 7vw, 3rem);
+    line-height: 65px;
+}
+
+.hero-content p {
+    margin: 20px 0;
+    font-size: 25px;
+    font-weight: 300;
+    letter-spacing: 5px;
+    line-height: 25px;
+}
+
+.buttons {
+    width: 500px;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    border: none;
+    border-radius: 20px;
+    border-top-right-radius: 0;
+    padding: 10px 20px;
+    width: 750px;
+    margin: 5px;
+    background: #cd7828;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    transition: .3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+    height: 60px;
+}
+
+.btn span {
+    /* border: 1px solid red; */
+    padding: 7px 0 0 10px;
+    display: none;
+    animation: display .5s ease-in-out;
+}
+
+.btn:hover {
+    background: #cd7828f2;
+    color: #1a1a1a;
+    transition: 0.3s ease-in-out;
+    border-top-right-radius: 20px;
+}
+
+.btn:hover span {
+    display: inline;
+    animation: display .5s ease-in-out;
+}
+
+@keyframes display {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: translateX(-5px);
+    }
+
+    75% {
+        opacity: 0.75;
+        transform: translateX(-2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .buttons {
+        width: auto;
+        /* border: 1px solid red; */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn {
+        width: auto;
+    }
+}
+
+@media (max-width: 900px) {
+    .buttons {
+        width: auto;
+        /* border: 1px solid red; */
+        display: flex;
+        flex-direction: column;
+    }
+    .btn {
+        width: auto;
+    }
+}
