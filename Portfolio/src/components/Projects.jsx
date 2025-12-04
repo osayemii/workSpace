@@ -19,7 +19,7 @@ const Projects = () => {
       description: 'A collaborative task management application with real-time updates and team collaboration features.',
       tech: ['React', 'Firebase', 'JavaScript'],
       image: '📋',
-      link: 'https://fantastic-axolotl-962bd2.netlify.app/',
+      link: 'https://693188204e4b990077012e20--endearing-tarsier-f9f7a6.netlify.app/',
       githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Task_Management'
     },
     {
@@ -35,7 +35,7 @@ const Projects = () => {
       description: 'Real-time weather application with location-based forecasts and beautiful UI design.',
       tech: ['React', 'API Integration', 'CSS'],
       image: '🌤️',
-      link: 'https://weather-apllication.vercel.app/',
+      link: 'https://weather-app-jade-nine-68.vercel.app/',
       githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Weather-App'
     },
     {
@@ -51,7 +51,7 @@ const Projects = () => {
       description: 'A real-time chat application with multiple rooms, file sharing, and emoji support. This project is still in development.',
       tech: ['React', 'Vite', 'JavaScript'],
       image: '💬',
-      link: 'https://rad-bublanina-495d83.netlify.app/',
+      link: 'https://graceful-mousse-1db4a1.netlify.app/',
       githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Chat-Application'
     }
   ];
