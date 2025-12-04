@@ -14,13 +14,25 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const httpServer = createServer(app);
 
-// CORS configuration - allow all localhost ports for development
+// CORS configuration - supports both development and production
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : [];
+
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    // Allow all localhost ports
+    // Allow all localhost ports for development
     if (origin.match(/^http:\/\/localhost:\d+$/) || origin.match(/^http:\/\/127\.0\.0\.1:\d+$/)) {
+      return callback(null, true);
+    }
+    // Allow production origins from environment variable
+    if (allowedOrigins.length > 0 && allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    // Allow all Netlify preview deployments
+    if (origin.match(/^https:\/\/.*\.netlify\.app$/)) {
       return callback(null, true);
     }
     callback(new Error('Not allowed by CORS'));
@@ -32,7 +44,16 @@ const io = new Server(httpServer, {
   cors: {
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
+      // Allow all localhost ports for development
       if (origin.match(/^http:\/\/localhost:\d+$/) || origin.match(/^http:\/\/127\.0\.0\.1:\d+$/)) {
+        return callback(null, true);
+      }
+      // Allow production origins from environment variable
+      if (allowedOrigins.length > 0 && allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      // Allow all Netlify preview deployments
+      if (origin.match(/^https:\/\/.*\.netlify\.app$/)) {
         return callback(null, true);
       }
       callback(new Error('Not allowed by CORS'));

@@ -19,7 +19,7 @@ const Projects = () => {
       description: 'A collaborative task management application with real-time updates and team collaboration features.',
       tech: ['React', 'Firebase', 'JavaScript'],
       image: '📋',
-      link: '#',
+      link: 'https://fantastic-axolotl-962bd2.netlify.app/',
       githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Task_Management'
     },
     {
@@ -27,7 +27,7 @@ const Projects = () => {
       description: 'A furniture company website that showcases their products and allow users to view the products and their details.',
       tech: ['React', 'Vite', 'JavaScript'],
       image: '🪑',
-      link: '#',
+      link: 'https://animated-gingersnap-93d8fd.netlify.app/',
       githublink: 'https://github.com/osayemii/Semester1/tree/main/REACT/Wayby'
     },
     {
@@ -35,7 +35,7 @@ const Projects = () => {
       description: 'Real-time weather application with location-based forecasts and beautiful UI design.',
       tech: ['React', 'API Integration', 'CSS'],
       image: '🌤️',
-      link: '#',
+      link: 'https://weather-apllication.vercel.app/',
       githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Weather-App'
     },
     {

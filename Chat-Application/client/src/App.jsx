@@ -16,7 +16,9 @@ function App() {
     document.documentElement.setAttribute('data-theme', savedTheme);
 
     // Initialize socket connection
-    socketRef.current = io('http://localhost:3001', {
+    // Use environment variable for production, fallback to localhost for development
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3001';
+    socketRef.current = io(socketUrl, {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionAttempts: Infinity,

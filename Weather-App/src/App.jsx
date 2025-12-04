@@ -11,6 +11,12 @@ import './App.css'
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather'
 
+// Debug: Check if API key is loaded (remove this after fixing)
+if (import.meta.env.DEV) {
+  console.log('API Key loaded:', API_KEY ? 'Yes (hidden)' : 'No - Missing!')
+  console.log('All env vars:', Object.keys(import.meta.env).filter(key => key.startsWith('VITE_')))
+}
+
 function App() {
   const [city, setCity] = useState('')
   const [weather, setWeather] = useState(null)
@@ -24,7 +30,7 @@ function App() {
     setSource('')
 
     if (!API_KEY) {
-      setError('Missing API key. Set VITE_OPENWEATHER_API_KEY in a .env file.')
+      setError('Missing API key. Make sure:\n1. .env file exists in project root (same level as package.json)\n2. File contains: VITE_OPENWEATHER_API_KEY=your_key_here\n3. Dev server was restarted after creating/editing .env\n4. No spaces around the = sign')
       return
     }
 
@@ -87,7 +93,7 @@ function App() {
 
     if (!API_KEY) {
       // Show this once so user knows why nothing loads
-      setError('Missing API key. Set VITE_OPENWEATHER_API_KEY in a .env file.')
+      setError('Missing API key. Make sure:\n1. .env file exists in project root (same level as package.json)\n2. File contains: VITE_OPENWEATHER_API_KEY=your_key_here\n3. Dev server was restarted after creating/editing .env\n4. No spaces around the = sign')
       return
     }
 
@@ -171,7 +177,7 @@ function App() {
     }
 
     if (!API_KEY) {
-      setError('Missing API key. Set VITE_OPENWEATHER_API_KEY in a .env file.')
+      setError('Missing API key. Make sure:\n1. .env file exists in project root (same level as package.json)\n2. File contains: VITE_OPENWEATHER_API_KEY=your_key_here\n3. Dev server was restarted after creating/editing .env\n4. No spaces around the = sign')
       return
     }
 
