@@ -1,0 +1,130 @@
+.regeneration-options {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.6s ease;
+}
+
+.regeneration-title {
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  transition: color 0.3s ease;
+}
+
+.regeneration-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.regeneration-button {
+  background: var(--border-light);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.regeneration-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.regeneration-button:hover:not(.disabled)::before {
+  left: 100%;
+}
+
+.regeneration-button:hover:not(.disabled) {
+  background: var(--card-bg);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.regeneration-button:active:not(.disabled) {
+  transform: translateY(0);
+}
+
+.regeneration-button.active {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  color: white;
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-lg);
+  animation: pulse 0.6s ease;
+}
+
+.regeneration-button.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.regeneration-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.regeneration-button:hover:not(.disabled) .regeneration-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.regeneration-button.active .regeneration-icon {
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.regeneration-label {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .regeneration-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .regeneration-button {
+    padding: 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .regeneration-icon {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .regeneration-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+

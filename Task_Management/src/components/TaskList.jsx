@@ -9,7 +9,7 @@ import { FiPlus, FiLogOut, FiUsers, FiSun, FiMoon } from 'react-icons/fi';
 import { signOut } from 'firebase/auth';
 import './TaskList.css';
 
-const TaskList = () => {
+const TaskList = ({ user }) => {
   const { theme, toggleTheme } = useTheme();
   const [tasks, setTasks] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -17,12 +17,16 @@ const TaskList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showTeamManagement, setShowTeamManagement] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [loadingTasks, setLoadingTasks] = useState(true);
 
   useEffect(() => {
-    if (!auth.currentUser) {
+    if (!auth.currentUser || !user) {
       setTasks([]);
+      setLoadingTasks(false);
       return;
     }
+
+    setLoadingTasks(true);
 
     const allTasks = new Map();
 
@@ -34,6 +38,7 @@ const TaskList = () => {
         return dateB - dateA;
       });
       setTasks(tasksArray);
+      setLoadingTasks(false);
     };
 
     // Get tasks where user is owner
@@ -71,7 +76,12 @@ const TaskList = () => {
               allTasks.set(doc.id, { id: doc.id, ...doc.data() });
             });
             updateTasks();
+          }, (fallbackError) => {
+            console.error('Fallback query error:', fallbackError);
+            setLoadingTasks(false);
           });
+        } else {
+          setLoadingTasks(false);
         }
       }
     );
@@ -97,7 +107,12 @@ const TaskList = () => {
               allTasks.set(doc.id, { id: doc.id, ...doc.data() });
             });
             updateTasks();
+          }, (fallbackError) => {
+            console.error('Fallback query error:', fallbackError);
+            setLoadingTasks(false);
           });
+        } else {
+          setLoadingTasks(false);
         }
       }
     );
@@ -106,7 +121,7 @@ const TaskList = () => {
       unsubscribe1();
       unsubscribe2();
     };
-  }, [auth.currentUser?.uid]);
+  }, [user?.uid]);
 
   const handleAddTask = async (taskData) => {
     try {
@@ -257,21 +272,28 @@ const TaskList = () => {
         </button>
       </div>
 
-      <div className="tasks-grid">
-        {filteredTasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onUpdate={handleUpdateTask}
-            onDelete={handleDeleteTask}
-          />
-        ))}
-        {filteredTasks.length === 0 && (
-          <div className="empty-state">
-            <p>No tasks found. Create your first task!</p>
-          </div>
-        )}
-      </div>
+      {loadingTasks ? (
+        <div className="loading-tasks">
+          <div className="spinner"></div>
+          <p>Loading your tasks...</p>
+        </div>
+      ) : (
+        <div className="tasks-grid">
+          {filteredTasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              onUpdate={handleUpdateTask}
+              onDelete={handleDeleteTask}
+            />
+          ))}
+          {filteredTasks.length === 0 && (
+            <div className="empty-state">
+              <p>No tasks found. Create your first task!</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {showForm && (
         <TaskForm

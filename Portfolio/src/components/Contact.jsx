@@ -11,11 +11,11 @@ const Contact = () => {
   });
 
   const socialLinks = [
-    { name: 'GitHub', icon: FiGithub, url: 'https://github.com' },
-    { name: 'LinkedIn', icon: FiLinkedin, url: 'https://linkedin.com' },
-    { name: 'Twitter', icon: FiTwitter, url: 'https://twitter.com' },
-    { name: 'Instagram', icon: FiInstagram, url: 'https://instagram.com' },
-    { name: 'Email', icon: FiMail, url: 'mailto:your.email@example.com' },
+    { name: 'GitHub', icon: FiGithub, url: 'https://github.com/osayemii' },
+    { name: 'LinkedIn', icon: FiLinkedin, url: 'https://linkedin.com/osayemii' },
+    { name: 'Twitter', icon: FiTwitter, url: 'https://x.com/OsayemiD010' },
+    { name: 'Instagram', icon: FiInstagram, url: 'https://www.instagram.com/osayemidaniel/' },
+    { name: 'Email', icon: FiMail, url: 'osayemidanniel@gmail.com' },
   ];
 
   useEffect(() => {

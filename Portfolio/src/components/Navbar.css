@@ -27,6 +27,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .nav-logo {
@@ -108,26 +110,28 @@
   }
 }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
 
-.theme-toggle {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  color: var(--text-color);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
-}
+  .theme-toggle {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
 
 .theme-toggle svg {
   width: 1.2rem;
@@ -145,14 +149,15 @@
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
   color: var(--text-color);
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  flex-shrink: 0;
 }
 
 .mobile-menu-toggle svg {
@@ -162,16 +167,22 @@
 
 @media (max-width: 768px) {
   .navbar {
-    padding: 1rem;
+    padding: 1rem 1rem;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .nav-container {
     width: 100%;
+    gap: 0.5rem;
   }
 
   .nav-logo {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .mobile-menu-toggle {
@@ -180,7 +191,7 @@
 
   .nav-menu {
     position: fixed;
-    top: 70px;
+    top: 65px;
     left: -100%;
     flex-direction: column;
     background: var(--bg-primary);
@@ -190,6 +201,9 @@
     box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
     padding: 2rem 0;
     gap: 0;
+    height: calc(100vh - 65px);
+    overflow-y: auto;
+    z-index: 999;
   }
 
   .nav-menu.active {
@@ -217,6 +231,33 @@
     background: var(--bg-secondary);
     border-radius: 8px;
     margin: 0 1rem;
+  }
+
+  .nav-actions {
+    gap: 0.5rem;
+  }
+
+  .theme-toggle,
+  .mobile-menu-toggle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.75rem 0.75rem;
+  }
+
+  .nav-logo {
+    font-size: 0.9rem;
+    max-width: 120px;
+  }
+
+  .nav-menu {
+    top: 60px;
+    height: calc(100vh - 60px);
   }
 }
 

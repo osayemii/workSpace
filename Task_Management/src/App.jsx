@@ -38,7 +38,7 @@ function App() {
     <ThemeProvider>
       <div className="App">
         <AnimatedBackground />
-        {user ? <TaskList /> : <Auth onAuthSuccess={() => setUser(auth.currentUser)} />}
+        {user ? <TaskList user={user} /> : <Auth onAuthSuccess={() => {}} />}
       </div>
     </ThemeProvider>
   );

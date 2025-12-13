@@ -19,7 +19,7 @@ const Projects = () => {
       description: 'A collaborative task management application with real-time updates and team collaboration features.',
       tech: ['React', 'Firebase', 'JavaScript'],
       image: '📋',
-      link: 'https://693188204e4b990077012e20--endearing-tarsier-f9f7a6.netlify.app/',
+      link: 'https://6932014711f4976a2b95b8b2--glittering-crumble-3e633c.netlify.app/',
       githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Task_Management'
     },
     {
@@ -51,7 +51,7 @@ const Projects = () => {
       description: 'A real-time chat application with multiple rooms, file sharing, and emoji support. This project is still in development.',
       tech: ['React', 'Vite', 'JavaScript'],
       image: '💬',
-      link: 'https://graceful-mousse-1db4a1.netlify.app/',
+      link: 'https://stunning-pudding-714ebc.netlify.app/',
       githublink: 'https://github.com/osayemii/my_rough_works/tree/master/Chat-Application'
     }
   ];

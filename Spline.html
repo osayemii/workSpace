@@ -1,0 +1,244 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.6/build/spline-viewer.js"></script>
+    <title>Spline</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        spline-viewer {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <spline-viewer id="mySpline" url="https://prod.spline.design/fN34dRQ8JUwwMe1d/scene.splinecode"></spline-viewer>
+
+    <script>
+        console.log('Script started');
+        
+        // Wait for both DOM and custom element to be ready
+        async function initSpline() {
+            // Wait for DOM
+            if (document.readyState === 'loading') {
+                await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
+            }
+            
+            console.log('DOM loaded');
+            
+            // Wait for custom element to be defined
+            if (!customElements.get('spline-viewer')) {
+                console.log('Waiting for spline-viewer custom element...');
+                await customElements.whenDefined('spline-viewer');
+            }
+            
+            console.log('spline-viewer element defined');
+            
+            const viewer = document.getElementById('mySpline');
+            
+            if (!viewer) {
+                console.error('Viewer element not found!');
+                return;
+            }
+            
+            console.log('Viewer element found:', viewer);
+            console.log('Viewer properties:', Object.keys(viewer));
+            console.log('Protocol:', window.location.protocol);
+            
+            // Check if running via file:// protocol (won't work)
+            if (window.location.protocol === 'file:') {
+                console.error('❌ ERROR: File must be served via HTTP/HTTPS, not file:// protocol!');
+                console.error('Please use a web server (Live Server, Python http.server, etc.)');
+                alert('ERROR: This file must be opened through a web server, not directly!\n\nUse Live Server extension or run: python -m http.server 8000');
+                return;
+            }
+            
+            // Listen for errors on the viewer
+            viewer.addEventListener('error', (e) => {
+                console.error('Spline viewer error:', e);
+                console.error('Error details:', e.detail);
+            });
+            
+            // Try multiple ways to detect when Spline is loaded
+            const checkSpline = () => {
+                // Try different ways to access Spline
+                const spline = viewer.spline || viewer.application || viewer.scene;
+                
+                if (spline) {
+                    console.log('=== Spline Loaded Successfully ===');
+                    console.log('Spline object:', spline);
+                    console.log('Spline methods:', Object.keys(spline));
+                    
+                    // Try to get the Group object
+                    if (spline.getObjectByName) {
+                        const group = spline.getObjectByName('Group');
+                        console.log('Group object:', group);
+                        
+                        if (group) {
+                            // Try to add click event
+                            if (group.addEventListener) {
+                                group.addEventListener('click', () => {
+                                    console.log('Group clicked');
+                                });
+                            } else {
+                                console.warn('Group does not support addEventListener');
+                            }
+                        } else {
+                            console.warn('Group not found. Listing all objects...');
+                            // Try to list all objects
+                            if (spline.getAllObjects) {
+                                const allObjects = spline.getAllObjects();
+                                console.log('All objects:', allObjects);
+                            }
+                        }
+                    } else {
+                        console.warn('getObjectByName method not available');
+                    }
+                    
+                    return true;
+                }
+                return false;
+            };
+            
+            // Check immediately
+            if (checkSpline()) {
+                return;
+            }
+            
+            // Listen for load event
+            viewer.addEventListener('load', () => {
+                console.log('✅ Load event fired');
+                setTimeout(() => checkSpline(), 500); // Give it a moment
+            });
+            
+            // Listen for other possible events
+            ['loaded', 'ready', 'complete'].forEach(eventName => {
+                viewer.addEventListener(eventName, () => {
+                    console.log(`Event '${eventName}' fired`);
+                    setTimeout(() => checkSpline(), 500);
+                });
+            });
+            
+            // Also poll as fallback
+            let attempts = 0;
+            const pollInterval = setInterval(() => {
+                attempts++;
+                if (checkSpline()) {
+                    console.log(`Spline loaded after ${attempts * 0.1} seconds`);
+                    clearInterval(pollInterval);
+                } else if (attempts > 100) {
+                    console.error('❌ Spline failed to load after 10 seconds');
+                    console.error('Possible issues:');
+                    console.error('1. Not running via web server (must use http:// not file://)');
+                    console.error('2. Spline scene URL might be invalid');
+                    console.error('3. Network/CORS issues');
+                    console.error('Viewer state:', {
+                        spline: viewer.spline,
+                        application: viewer.application,
+                        scene: viewer.scene,
+                        allKeys: Object.keys(viewer)
+                    });
+                    clearInterval(pollInterval);
+                }
+            }, 100);
+        }
+        
+        // Start initialization
+        initSpline().catch(err => {
+            console.error('Error initializing Spline:', err);
+        });
+
+        // Log any errors
+        window.addEventListener('error', (e) => {
+            console.error('Global error:', e.error, e.message);
+        });
+
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spline Example</title>
+  <!-- Load the Spline viewer -->
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.6/build/spline-viewer.js"></script>
+</head>
+<body>
+  <!-- Embed your Spline scene -->
+  <spline-viewer id="spline" url="https://prod.spline.design/fN34dRQ8JUwwMe1d/scene.splinecode"></spline-viewer>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    spline-viewer {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+  <script>
+    const viewer = document.getElementById('spline');
+
+    if (!viewer) {
+      console.error('Viewer element not found!');
+    } else {
+      // Wait until the scene is loaded
+      viewer.addEventListener('load', () => {
+        console.log('Spline scene loaded!');
+
+        // Access the Spline application
+        const application = viewer.application;
+        console.log('Application:', application);
+
+        if (application) {
+          // Method 1: Use findObjectByName on the application
+          if (application.findObjectByName) {
+            const cube = application.findObjectByName('Group');
+            console.log('Group found (method 1):', cube);
+            
+            if (cube) {
+              cube.position.x = 5;
+              console.log('Group position updated');
+            }
+          }
+
+          // Method 2: Access the scene and use Three.js getObjectByName
+          if (application.scene) {
+            const scene = application.scene;
+            const groupByName = scene.getObjectByName('Group');
+            console.log('Group found (method 2):', groupByName);
+            
+            if (groupByName) {
+              groupByName.position.y = 2;
+            }
+          }
+        } else {
+          console.error('Application not available. Available properties:', Object.keys(viewer));
+        }
+
+        // Add interaction - listen for mouse events
+        viewer.addEventListener('mouseDown', (e) => {
+          console.log('Mouse down event:', e);
+          if (e.target && e.target.name === 'Group') {
+            console.log('Group clicked!');
+            if (e.target.material) {
+              e.target.material.color.setHex(0xff0000); // red
+            }
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>

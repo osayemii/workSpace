@@ -36,7 +36,7 @@
 }
 
 .message.file-wrapper {
-  width: 50px;
+  max-width: 50%;
 }
 
 @keyframes messageSlideIn {
