@@ -104,14 +104,6 @@ function App() {
     setBreakdown(breakdownData)
   }
 
-  const handleGoalRename = (newGoalText, breakdownData) => {
-    setGoal(newGoalText)
-    setBreakdown(breakdownData)
-    // Update current goal in localStorage
-    localStorage.setItem('goal-breakdown-current-goal', newGoalText)
-    localStorage.setItem('goal-breakdown-current-breakdown', JSON.stringify(breakdownData))
-  }
-
   const handleReset = () => {
     // Clear all persisted data when resetting
     if (goal) {
@@ -154,7 +146,6 @@ function App() {
         onClose={() => setIsHistoryOpen(false)}
         onSelectGoal={handleSelectGoal}
         currentGoal={goal}
-        onGoalRename={handleGoalRename}
       />
     </div>
   )

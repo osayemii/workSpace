@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import './TaskBreakdown.css'
 import TaskCard from './TaskCard'
 import SummaryCard from './SummaryCard'
@@ -11,36 +11,45 @@ import { EFFORT_LEVELS, SKILL_LEVELS } from '../utils/goalAnalyzer'
 function TaskBreakdown({ goal, breakdown, onReset, onOpenHistory, onRegenerate, isRegenerating }) {
   const [selectedView, setSelectedView] = useState('tasks') // 'tasks' or 'order'
   const [expandedTaskId, setExpandedTaskId] = useState(null)
+  const previousGoalRef = useRef(goal)
+  const completionStateRef = useRef({})
 
   // Track completion state: { taskId: { completed: boolean, subtasks: { index: boolean } } }
   // Load from localStorage if available, otherwise initialize with empty state
   const [completionState, setCompletionState] = useState(() => {
     const saved = localStorage.getItem(`goal-completion-${goal}`)
-    return saved ? JSON.parse(saved) : {}
+    const state = saved ? JSON.parse(saved) : {}
+    completionStateRef.current = state
+    return state
   })
 
-  // Clear completion state when goal changes (new project)
+  // Load completion state when goal changes
   useEffect(() => {
+    // Save the previous goal's completion state before switching
+    if (previousGoalRef.current && previousGoalRef.current !== goal) {
+      localStorage.setItem(`goal-completion-${previousGoalRef.current}`, JSON.stringify(completionStateRef.current))
+    }
+
     // Load completion state for the current goal
     const saved = localStorage.getItem(`goal-completion-${goal}`)
     if (saved) {
-      setCompletionState(JSON.parse(saved))
+      const state = JSON.parse(saved)
+      setCompletionState(state)
+      completionStateRef.current = state
     } else {
       setCompletionState({})
+      completionStateRef.current = {}
     }
-    
-    // Clear localStorage for previous goals if needed
-    const keys = Object.keys(localStorage)
-    keys.forEach(key => {
-      if (key.startsWith('goal-completion-') && key !== `goal-completion-${goal}`) {
-        localStorage.removeItem(key)
-      }
-    })
+
+    // Update the previous goal reference
+    previousGoalRef.current = goal
+    // Note: We preserve completion states for all goals so users can switch between them
   }, [goal])
 
   // Save completion state to localStorage whenever it changes (only for current goal)
   useEffect(() => {
     if (goal) {
+      completionStateRef.current = completionState
       localStorage.setItem(`goal-completion-${goal}`, JSON.stringify(completionState))
     }
   }, [completionState, goal])
@@ -145,20 +154,20 @@ function TaskBreakdown({ goal, breakdown, onReset, onOpenHistory, onRegenerate, 
     <div className="task-breakdown-container">
       <div className="breakdown-header">
         <div className="goal-title-wrapper">
-          <h2 className="goal-title">{goal}</h2>
-          <>
-          <ThemeToggle />
-          <button className="history-button" onClick={onOpenHistory} title="View History">
-          <svg height="20" width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-	<path d="M17 3.3C13.1 1.1 8.3 1.8 5.1 4.8V3c0-.6-.4-1-1-1s-1 .4-1 1v4.5c0 .6.4 1 1 1h4.5c.6 0 1-.4 1-1s-.4-1-1-1H6.2C7.7 4.9 9.8 4 12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8s-8-3.6-8-8c0-.6-.4-1-1-1s-1 .4-1 1c0 5.5 4.5 10 10 10c3.6 0 6.9-1.9 8.7-5c2.7-4.8 1.1-10.9-3.7-13.7zM12 8c-.6 0-1 .4-1 1v3c0 .6.4 1 1 1h2c.6 0 1-.4 1-1s-.4-1-1-1h-1V9c0-.6-.4-1-1-1z" fill="currentColor"/>
-</svg>
-          </button>
-          </>
-        </div>
-        <div className="header-actions">
           <button className="reset-button" onClick={onReset}>
             ← New Goal
           </button>
+          <div style={{display: 'flex', gap: '0.5rem'}}>
+            <ThemeToggle />
+            <button className="history-button" onClick={onOpenHistory} title="View History">
+              <svg height="20" width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 3.3C13.1 1.1 8.3 1.8 5.1 4.8V3c0-.6-.4-1-1-1s-1 .4-1 1v4.5c0 .6.4 1 1 1h4.5c.6 0 1-.4 1-1s-.4-1-1-1H6.2C7.7 4.9 9.8 4 12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8s-8-3.6-8-8c0-.6-.4-1-1-1s-1 .4-1 1c0 5.5 4.5 10 10 10c3.6 0 6.9-1.9 8.7-5c2.7-4.8 1.1-10.9-3.7-13.7zM12 8c-.6 0-1 .4-1 1v3c0 .6.4 1 1 1h2c.6 0 1-.4 1-1s-.4-1-1-1h-1V9c0-.6-.4-1-1-1z" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div className="header-actions">
+          <h2 className="goal-title">{goal}</h2>
         </div>
         <div className="view-toggle">
           <button
@@ -178,7 +187,7 @@ function TaskBreakdown({ goal, breakdown, onReset, onOpenHistory, onRegenerate, 
 
       <SummaryCard summary={dynamicSummary} />
 
-      <RegenerationOptions 
+      <RegenerationOptions
         goal={goal}
         onRegenerate={onRegenerate}
         isRegenerating={isRegenerating}

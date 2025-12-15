@@ -322,12 +322,6 @@
     font-size: 1.25rem;
   }
 
-  .history-actions-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
   .history-total-goals {
     font-size: 0.9rem;
   }

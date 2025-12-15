@@ -1,0 +1,7 @@
+[build]
+  # Publish the birthday directory as the site root
+  publish = "birthday"
+  
+  # No build command needed for static HTML
+  command = ""
+

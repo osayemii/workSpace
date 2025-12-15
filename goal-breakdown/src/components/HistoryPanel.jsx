@@ -1,11 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import './HistoryPanel.css'
 
-function HistoryPanel({ isOpen, onClose, onSelectGoal, currentGoal, onGoalRename }) {
+function HistoryPanel({ isOpen, onClose, onSelectGoal, currentGoal }) {
   const [history, setHistory] = useState([])
-  const [editingId, setEditingId] = useState(null)
-  const [editValue, setEditValue] = useState('')
-  const editInputRef = useRef(null)
 
   useEffect(() => {
     // Load history from localStorage
@@ -44,77 +41,6 @@ function HistoryPanel({ isOpen, onClose, onSelectGoal, currentGoal, onGoalRename
     }
   }
 
-  const startEditing = (item, e) => {
-    e.stopPropagation()
-    setEditingId(item.id)
-    setEditValue(item.goal)
-    // Focus input after state update
-    setTimeout(() => {
-      if (editInputRef.current) {
-        editInputRef.current.focus()
-        editInputRef.current.select()
-      }
-    }, 0)
-  }
-
-  const saveEdit = (itemId) => {
-    if (!editValue.trim()) {
-      // If empty, cancel edit
-      cancelEdit()
-      return
-    }
-
-    const item = history.find(i => i.id === itemId)
-    const newGoal = editValue.trim()
-    const wasCurrentGoal = item && item.goal === currentGoal
-
-    const updatedHistory = history.map(item => {
-      if (item.id === itemId) {
-        // Update both the goal and the breakdown's goal property
-        const updatedBreakdown = {
-          ...item.breakdown,
-          goal: newGoal
-        }
-        return {
-          ...item,
-          goal: newGoal,
-          breakdown: updatedBreakdown
-        }
-      }
-      return item
-    })
-    
-    localStorage.setItem('goal-breakdown-history', JSON.stringify(updatedHistory))
-    setHistory(updatedHistory)
-    
-    // If this was the current goal, update it in the parent
-    if (wasCurrentGoal && onGoalRename) {
-      const updatedBreakdown = {
-        ...item.breakdown,
-        goal: newGoal
-      }
-      onGoalRename(newGoal, updatedBreakdown)
-    }
-    
-    setEditingId(null)
-    setEditValue('')
-  }
-
-  const cancelEdit = () => {
-    setEditingId(null)
-    setEditValue('')
-  }
-
-  const handleEditKeyDown = (e, itemId) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      saveEdit(itemId)
-    } else if (e.key === 'Escape') {
-      e.preventDefault()
-      cancelEdit()
-    }
-  }
-
   if (!isOpen) return null
 
   return (
@@ -145,30 +71,14 @@ function HistoryPanel({ isOpen, onClose, onSelectGoal, currentGoal, onGoalRename
               {history.map((item) => (
                 <div
                   key={item.id}
-                  className={`history-item ${currentGoal === item.goal ? 'active' : ''} ${editingId === item.id ? 'editing' : ''}`}
+                  className={`history-item ${currentGoal === item.goal ? 'active' : ''}`}
                   onClick={() => {
-                    if (editingId !== item.id) {
-                      onSelectGoal(item.goal, item.breakdown)
-                      onClose()
-                    }
+                    onSelectGoal(item.goal, item.breakdown)
+                    onClose()
                   }}
                 >
                   <div className="history-item-content">
-                    {editingId === item.id ? (
-                      <input
-                        ref={editInputRef}
-                        type="text"
-                        className="history-item-edit-input"
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value)}
-                        onBlur={() => saveEdit(item.id)}
-                        onKeyDown={(e) => handleEditKeyDown(e, item.id)}
-                        onClick={(e) => e.stopPropagation()}
-                        placeholder="Enter goal title..."
-                      />
-                    ) : (
-                      <h3 className="history-item-title">{item.goal}</h3>
-                    )}
+                    <h3 className="history-item-title">{item.goal}</h3>
                     <div className="history-item-meta">
                       <span className="history-item-date">
                         {new Date(item.createdAt).toLocaleDateString()} at{' '}
@@ -180,13 +90,6 @@ function HistoryPanel({ isOpen, onClose, onSelectGoal, currentGoal, onGoalRename
                     </div>
                   </div>
                   <div className="history-item-actions">
-                    <button
-                      className="history-item-edit"
-                      onClick={(e) => startEditing(item, e)}
-                      title="Rename goal"
-                    >
-                      ✏️
-                    </button>
                     <button
                       className="history-item-delete"
                       onClick={(e) => deleteHistoryItem(item.id, e)}
